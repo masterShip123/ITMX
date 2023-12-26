@@ -9,19 +9,19 @@ import (
 	"itmx/utilities"
 )
 
-type profileService struct {
-	Repository  repositories.ProfileRepository
+type CustomerService struct {
+	Repository  repositories.CustomerRepository
 	HandlerName func(fn string) string
 }
 
-func NewCustomerService() services.ProfileService {
-	return &profileService{
-		Repository:  repository.NewProfileRepository(),
-		HandlerName: func(fn string) string { return fmt.Sprintf("Profile CMS %s Service", fn) },
+func NewCustomerService() services.CustomerService {
+	return &CustomerService{
+		Repository:  repository.NewCustomerRepository(),
+		HandlerName: func(fn string) string { return fmt.Sprintf("Customer %s Service", fn) },
 	}
 }
 
-func (d *profileService) List(payload *types.Customer) *[]types.Customer {
+func (d *CustomerService) List(payload *types.Customer) *[]types.Customer {
 
 	// Connect Database
 	db := utilities.SetupDB()
@@ -31,7 +31,7 @@ func (d *profileService) List(payload *types.Customer) *[]types.Customer {
 	return rows
 }
 
-func (d *profileService) Show(id int) *types.Customer {
+func (d *CustomerService) Show(id uint64) *types.Customer {
 
 	// Connect Database
 	db := utilities.SetupDB()
@@ -39,19 +39,19 @@ func (d *profileService) Show(id int) *types.Customer {
 	return data
 }
 
-func (d *profileService) Create(payload *types.Customer) (error, string) {
+func (d *CustomerService) Create(payload *types.Customer) (error, string, uint) {
 	// Connect Database
 	db := utilities.SetupDB()
 	return d.Repository.Create(db, payload)
 }
 
-func (d *profileService) Update(id int, payload *types.Customer) (error, string, interface{}) {
+func (d *CustomerService) Update(id uint64, payload *types.Customer) (error, string, interface{}) {
 	// Connect Database
 	db := utilities.SetupDB()
 	return d.Repository.Update(db, id, payload)
 }
 
-func (d *profileService) Delete(id int) (error, string, interface{}) {
+func (d *CustomerService) Delete(id uint64) (error, string, interface{}) {
 	// Connect Database
 	db := utilities.SetupDB()
 	return d.Repository.Delete(db, id)

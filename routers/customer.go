@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	service "itmx/services/customer"
 	"itmx/types"
-	"itmx/utilities"
 	"net/http"
 	"strconv"
 )
@@ -16,14 +15,14 @@ func CreateCustomer(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	_, _id := sv.Create(payload)
+	_, _, _id := sv.Create(payload)
 
 	c.JSON(http.StatusCreated, _id)
 }
 
 func GetCustomer(c *gin.Context) {
 	sv := service.NewCustomerService()
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
 	data := sv.Show(id)
 	if data == nil {
@@ -39,7 +38,7 @@ func GetCustomers(c *gin.Context) {
 	defer func() { payload = nil }()
 	err := c.BindJSON(&payload)
 	if err != nil {
-		utilities.ResponseBadRequest(c)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	list := sv.List(payload)
@@ -49,7 +48,7 @@ func GetCustomers(c *gin.Context) {
 
 func UpdateCustomer(c *gin.Context) {
 	sv := service.NewCustomerService()
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 
 	var payload *types.Customer
 	if err := c.ShouldBindJSON(&payload); err != nil {
@@ -67,7 +66,7 @@ func UpdateCustomer(c *gin.Context) {
 
 func DeleteCustomer(c *gin.Context) {
 	sv := service.NewCustomerService()
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
 	_, message, _id := sv.Delete(id)
 	if message == "DATA_NOT_FOUND" {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Record not found!"})
