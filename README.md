@@ -14,7 +14,7 @@ Before running the application, create an SQLite database file named test.db in 
 
 4. Run the Application:
 In the terminal, navigate to the directory containing the Golang code for the REST application. Run the following command:
-go run /local/main.go
+go run /api/local/main.go
 This will start the Golang REST application on port 8080.
 
 #Setup and Run the Data Initialization Script:
@@ -24,7 +24,7 @@ Download the Golang code for the data initialization script.
 2. Run the Script:
 In the terminal, navigate to the directory containing the Golang code for the data initialization script. Run the following command:
 
-go run /migrationDB/main.go
+go run /api/migrationDB/main.go
 This will insert sample customer data into the SQLite database.
 
 #Interact with the REST API:
