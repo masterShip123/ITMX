@@ -3,9 +3,9 @@
 1. Install Required Packages:
 Make sure you have the required packages installed. In the terminal, run:
 
-go get -u github.com/gin-gonic/gin
-go get -u gorm.io/gorm
-go get -u gorm.io/driver/sqlite
+- go get -u github.com/gin-gonic/gin
+- go get -u gorm.io/gorm
+- go get -u gorm.io/driver/sqlite
 2. Download the Code:
 Download the Golang code for the REST application and the data initialization script.
 
